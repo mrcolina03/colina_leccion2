@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: purchase-order-service
+  profiles:
+    active: dev # Perfil por defecto
+
+---
+# Configuración para Desarrollo (Local)
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/purchase_db?serverTimezone=UTC
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+---
+# Configuración para Producción (Docker)
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    # 'mysqldb' será el nombre del servicio en docker-compose
+    url: jdbc:mysql://mysqldb:3306/purchase_db?serverTimezone=UTC
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate # En prod es mejor no hacer update automático
+    show-sql: false
