@@ -11,9 +11,10 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    url: jdbc:mysql://localhost:3306/purchase_db?serverTimezone=UTC
+    #que cree la base de datos localmente automaticamente
+    url: jdbc:mysql://localhost:3306/purchase_db?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
-    password: password
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -27,12 +28,12 @@ spring:
     activate:
       on-profile: prod
   datasource:
-    # 'mysqldb' será el nombre del servicio en docker-compose
+
     url: jdbc:mysql://mysqldb:3306/purchase_db?serverTimezone=UTC
     username: ${MYSQL_USER:root}
     password: ${MYSQL_PASSWORD:password}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: validate # En prod es mejor no hacer update automático
+      ddl-auto: update
     show-sql: false
